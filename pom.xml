@@ -6,7 +6,7 @@
 
     <groupId>com.lakatuna.microservices</groupId>
     <artifactId>crud-users</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>0.0.1</version>
 
     <name>crud-users</name>
 
@@ -20,6 +20,8 @@
     </properties>
 
     <dependencies>
+
+        <!-- CORE for microservices-->
         <dependency>
             <groupId>io.vertx</groupId>
             <artifactId>vertx-core</artifactId>

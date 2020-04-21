@@ -1,5 +1,6 @@
 package com.lakatuna.microservices;
 
+import com.lakatuna.microservices.routes.Users;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Future;
 import io.vertx.core.Promise;
@@ -35,6 +36,7 @@ public class MainVerticle extends AbstractVerticle {
 
     private Future<Void> prepareDatabase() {
         Promise<Void> promise = Promise.promise();
+
         JsonObject config = Vertx.currentContext().config();
 
         String uri = config.getString("mongo_uri");
@@ -50,13 +52,14 @@ public class MainVerticle extends AbstractVerticle {
                 .put("connection_string", uri)
                 .put("db_name", db);
 
-
         mongoSharedClient = MongoClient.create(vertx, mongoconfig);
         if (mongoSharedClient != null) {
             promise.complete();
         } else {
             promise.fail("Mongo db notting connection");
         }
+
+
         return promise.future();
     }
 
@@ -65,7 +68,8 @@ public class MainVerticle extends AbstractVerticle {
         HttpServer server = vertx.createHttpServer();
 
         Router router = Router.router(vertx);
-        router.get("/prova").handler(this::indexHandler);
+        router.get("/prueba").handler(this::indexHandler);
+        router.post("/users/create").handler(Users::create);
         router.post().handler(BodyHandler.create());
 
         server.requestHandler(router)
@@ -83,6 +87,6 @@ public class MainVerticle extends AbstractVerticle {
     private void indexHandler(RoutingContext routingContext) {
         routingContext.response().setStatusCode(500)
                 .putHeader("Content-Type", "text/html")
-                .end("prova");
+                .end("<h1> Hola como estas <h1>");
     }
 }

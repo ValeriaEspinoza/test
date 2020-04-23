@@ -55,26 +55,76 @@
             <version>1.2.3</version>
         </dependency>
 
+        <!-- communication forward verticles -->
+        <dependency>
+            <groupId>io.vertx</groupId>
+            <artifactId>vertx-service-proxy</artifactId>
+            <version>${vertx.version}</version>
+            <classifier>processor</classifier>
+        </dependency>
+
+        <!-- verticle operations code generator -->
+        <dependency>
+            <groupId>io.vertx</groupId>
+            <artifactId>vertx-codegen</artifactId>
+            <version>${vertx.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- verticle operations code generator -->
+        <dependency>
+            <groupId>io.vertx</groupId>
+            <artifactId>vertx-service-discovery</artifactId>
+            <version>3.9.0</version>
+        </dependency>
 
     </dependencies>
 
     <build>
         <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
             <plugins>
+                <!-- vertx code gen -->
+                <plugin>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.5.1</version>
+                    <configuration>
+                        <source>1.8</source>
+                        <target>1.8</target>
+                        <useIncrementalCompilation>false</useIncrementalCompilation>
+
+                        <annotationProcessors>
+                            <annotationProcessor>io.vertx.codegen.CodeGenProcessor</annotationProcessor>
+                        </annotationProcessors>
+                        <generatedSourcesDirectory>${project.basedir}/src/main/generated</generatedSourcesDirectory>
+                        <compilerArgs>
+                            <arg>-AoutputDirectory=${project.basedir}/src/main</arg>
+                        </compilerArgs>
+
+                    </configuration>
+                </plugin>
+
+
                 <!-- clean lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#clean_Lifecycle -->
                 <plugin>
                     <artifactId>maven-clean-plugin</artifactId>
                     <version>3.1.0</version>
+
+                    <!-- extra configuration -->
+                    <configuration>
+                        <filesets>
+                            <fileset>
+                                <directory>${project.basedir}/src/main/generated</directory>
+                            </fileset>
+                        </filesets>
+                    </configuration>
                 </plugin>
+
                 <!-- default lifecycle, jar packaging: see https://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_jar_packaging -->
                 <plugin>
                     <artifactId>maven-resources-plugin</artifactId>
                     <version>3.0.2</version>
                 </plugin>
-                <plugin>
-                    <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.8.0</version>
-                </plugin>
+
                 <plugin>
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>2.22.1</version>

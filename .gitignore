@@ -78,3 +78,6 @@ fabric.properties
 # modules.xml
 # .idea/misc.xml
 # *.ipr
+
+#Vertx Generated sources after mvn clean install
+/src/main/generated

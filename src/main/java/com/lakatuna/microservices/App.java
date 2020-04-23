@@ -13,6 +13,7 @@ import io.vertx.rxjava.core.Vertx;
 public class App {
     public static void main(String[] args) {
         Vertx vertx = Vertx.vertx();
+
         JsonObject config = new JsonObject();
         config.put("db.url", "mongodb://localhost:27017");
         config.put("db.name", "test");

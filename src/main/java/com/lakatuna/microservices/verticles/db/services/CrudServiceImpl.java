@@ -18,7 +18,6 @@ public class CrudServiceImpl implements CrudService {
 
     @Override
     public CrudService createUser(String param, Handler<AsyncResult<JsonArray>> resultHandler) {
-
         this.mongoClient.getCollections(listAsyncResult -> {
 
             if (listAsyncResult.succeeded()) {

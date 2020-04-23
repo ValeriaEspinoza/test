@@ -8,12 +8,8 @@ public class Users {
     private Users() {
     }
 
-    public static void create(RoutingContext routingContext, CrudService vertx) {
-        routingContext.response().setStatusCode(200)
-                .putHeader("Content-Type", "text/html")
-                .end("<h4> Hola <h4>");
-
-        /*vertx.createUser("prueba", jsonArrayAsyncResult -> {
+    public static void create(RoutingContext routingContext, CrudService crudService) {
+        crudService.createUser("prueba", jsonArrayAsyncResult -> {
             if (jsonArrayAsyncResult.succeeded()) {
                 routingContext.response().setStatusCode(200)
                         .putHeader("Content-Type", "text/html")
@@ -21,6 +17,6 @@ public class Users {
             } else {
                 routingContext.fail(jsonArrayAsyncResult.cause());
             }
-        });*/
+        });
     }
 }

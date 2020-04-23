@@ -37,8 +37,9 @@ public class MainVerticle extends AbstractVerticle {
     }
 
     public Future<Void> startAllVerticles() {
-        Promise<String> promiseCrudVerticle = Promise.promise();
         Promise<Void> promises = Promise.promise();
+
+        Promise<String> promiseCrudVerticle = Promise.promise();
 
         vertx.deployVerticle(new CrudVerticle(), new DeploymentOptions().setConfig(config()), promiseCrudVerticle);
         promiseCrudVerticle.future().compose(id -> {

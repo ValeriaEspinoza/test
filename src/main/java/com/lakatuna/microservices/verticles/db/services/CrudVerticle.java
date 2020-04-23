@@ -61,7 +61,7 @@ public class CrudVerticle extends AbstractVerticle implements VerticleConfigurat
         CrudService.create(mongoSharedClient, crudServiceAsyncResult -> {
             if (crudServiceAsyncResult.succeeded()) {
                 ServiceBinder serviceBinder = new ServiceBinder(vertx);
-                serviceBinder.setAddress(Constants.CONFIG_DB_QUEUE);
+                serviceBinder.setAddress(config().getString(Constants.CONFIG_DB_QUEUE));
                 serviceBinder.register(CrudService.class, crudServiceAsyncResult.result());
                 promise.complete();
             } else {
